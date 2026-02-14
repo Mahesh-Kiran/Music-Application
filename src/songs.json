@@ -1,0 +1,33 @@
+[
+    {
+      "id": 1,
+      "name": "Blinding Lights",
+      "artist": "The Weeknd",
+      "duration": "3:20"
+    },
+    {
+      "id": 2,
+      "name": "Believer",
+      "artist": "Imagine Dragons",
+      "duration": "3:24"
+    },
+    {
+      "id": 3,
+      "name": "Levitating",
+      "artist": "Dua Lipa",
+      "duration": "3:23"
+    },
+    {
+      "id": 4,
+      "name": "Counting Stars",
+      "artist": "OneRepublic",
+      "duration": "4:17"
+    },
+    {
+      "id": 5,
+      "name": "Stay",
+      "artist": "The Kid LAROI & Justin Bieber",
+      "duration": "2:21"
+    }
+  ]
+  
