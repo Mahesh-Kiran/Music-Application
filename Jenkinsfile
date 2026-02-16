@@ -9,10 +9,6 @@ pipeline {
     buildDiscarder(logRotator(numToKeepStr: '10'))
   }
 
-  // REMOVE this empty block:
-  // triggers {
-  // }
-
   stages {
     stage('Checkout') {
       steps {
@@ -22,7 +18,14 @@ pipeline {
 
     stage('Install dependencies') {
       steps {
-        sh 'if [ -f package-lock.json ]; then npm ci; else npm install; fi'
+        // Windows batch, not sh
+        bat '''
+          if exist package-lock.json (
+            call npm ci
+          ) else (
+            call npm install
+          )
+        '''
       }
     }
 
@@ -31,13 +34,16 @@ pipeline {
         expression { fileExists('package.json') }
       }
       steps {
-        sh 'npm test -- --watch=false || echo "Tests failed or not configured, continuing..."'
+        // If you don't have tests, you can skip this stage or keep it tolerant
+        bat '''
+          call npm test -- --watch=false || echo "Tests failed or not configured, continuing..."
+        '''
       }
     }
 
     stage('Build') {
       steps {
-        sh 'npm run build'
+        bat 'call npm run build'
       }
     }
 
@@ -47,7 +53,7 @@ pipeline {
       }
       steps {
         echo "Triggering Vercel deployment via Deploy Hook..."
-        sh 'curl -X POST "$VERCEL_DEPLOY_HOOK_URL"'
+        bat "curl -X POST \"%VERCEL_DEPLOY_HOOK_URL%\""
       }
     }
   }
